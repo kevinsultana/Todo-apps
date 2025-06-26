@@ -7,6 +7,11 @@
     {
       "name": "sultan",
       "id": 2
+    },
+    {
+      "id": "7f3a",
+      "name": "admin",
+      "password": "admin"
     }
   ],
   "todos": [
@@ -30,6 +35,13 @@
       "description": "Learn React4",
       "completed": false,
       "userId": 2
+    },
+    {
+      "id": "cc7c",
+      "title": "Learn React",
+      "description": "Learn React",
+      "completed": false,
+      "userId": "7f3a"
     }
   ]
 }
