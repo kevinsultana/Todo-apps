@@ -13,21 +13,21 @@
     {
       "id": 1,
       "title": "Learn React",
-      "description": "Desc Learn React",
+      "description": "Learn React",
       "completed": false,
       "userId": 1
     },
     {
       "id": 2,
       "title": "Learn React 1",
-      "description": "Desc Learn React2",
+      "description": "Learn React2",
       "completed": false,
       "userId": 1
     },
     {
       "id": 3,
       "title": "Learn React3",
-      "description": "Desc Learn React4",
+      "description": "Learn React4",
       "completed": false,
       "userId": 2
     }
