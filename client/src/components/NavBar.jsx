@@ -3,7 +3,7 @@ import logo from "../assets/logo.png";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { CiLogout } from "react-icons/ci";
 
-export default function NavBar() {
+export default function NavBar({ onClickLogout }) {
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
   );
@@ -30,7 +30,7 @@ export default function NavBar() {
         </h1>
       </div>
       <div className="flex items-center gap-6">
-        <button className="text-2xl dark:text-white">
+        <button onClick={onClickLogout} className="text-2xl dark:text-white">
           <CiLogout />
         </button>
         <button

@@ -43,6 +43,7 @@ export default function SignUp() {
       });
       if (response.status === 201) {
         setUser(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data));
         toast.success("Registration successful");
         navigate("/");
       }

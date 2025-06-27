@@ -65,6 +65,7 @@ export default function Login() {
 
     if (user) {
       setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
       toast.success("Login successful");
       navigate("/");
     } else {
@@ -75,7 +76,7 @@ export default function Login() {
   return (
     <div className="flex bg-gray-50 dark:bg-gray-800 transition-all duration-300 justify-center items-center h-screen">
       {/* container */}
-      <div className="p-4 bg-white dark:bg-gray-500 shadow-2xl w-sm rounded-xl">
+      <div className="p-4 bg-white dark:bg-gray-500 shadow-2xl w-sm rounded-xl transition-all duration-300">
         {/* btn dark mode */}
         <div className="flex w-full justify-end ">
           <button
