@@ -1,17 +1,14 @@
 {
   "user": [
     {
-      "name": "Kevin",
-      "id": 1
+      "username": "kevin",
+      "id": 1,
+      "password": "kevin123"
     },
     {
-      "name": "sultan",
-      "id": 2
-    },
-    {
-      "id": "7f3a",
-      "name": "admin",
-      "password": "admin"
+      "username": "admin",
+      "id": 2,
+      "password": "admin123"
     }
   ],
   "todos": [
@@ -35,13 +32,6 @@
       "description": "Learn React4",
       "completed": false,
       "userId": 2
-    },
-    {
-      "id": "cc7c",
-      "title": "Learn React",
-      "description": "Learn React",
-      "completed": false,
-      "userId": "7f3a"
     }
   ]
 }

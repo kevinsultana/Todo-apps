@@ -1,8 +1,33 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { BaseApi } from "../Api/BaseApi";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const [dataUser, setDataUser] = useState([]);
+
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const getDataUser = async () => {
+    try {
+      const response = await BaseApi.get("/user");
+      setDataUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDataUser();
+  }, []);
+
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
   );
@@ -20,6 +45,28 @@ export default function Login() {
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleLogin = () => {
+    if (!userName || !password) {
+      toast.error("Please enter username and password");
+      return;
+    }
+
+    const user = dataUser.find(
+      (user) => user.username === userName && user.password === password
+    );
+    if (user) {
+      toast.success("Login successful");
+      navigate("/");
+    } else {
+      toast.error("Login failed - Invalid username or password");
+    }
+  };
+
   return (
     <div className="flex bg-gray-50 dark:bg-gray-800 transition-all duration-300 justify-center items-center h-screen">
       {/* container */}
@@ -51,27 +98,39 @@ export default function Login() {
               User Name
             </label>
             <input
-              type="username"
               placeholder="Enter your username"
-              className="p-2 border rounded-md text-black dark:text-white"
+              className="p-2 border rounded-md outline-none text-black dark:text-white"
+              onChange={(e) => setUserName(e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="password" className="text-black dark:text-white">
               Password
             </label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="p-2 border rounded-md text-black dark:text-white"
-            />
+            <div className="flex p-2 border rounded-md text-black dark:text-white">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className="w-full outline-none"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button onClick={togglePasswordVisibility}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
-          <button className="bg-teal-500 text-white p-2 rounded-md w-3xs max-w-3xs self-center shadow-2xl transition-all duration-300 hover:bg-teal-600 active:bg-teal-700">
+          <button
+            onClick={handleLogin}
+            className="bg-teal-500 text-white p-2 rounded-md w-3xs max-w-3xs self-center shadow-2xl transition-all duration-300 hover:bg-teal-600 active:bg-teal-700"
+          >
             Login
           </button>
-          <button className="border-2 border-teal-500 text-black dark:text-white p-2 rounded-md w-3xs max-w-3xs self-center shadow-2xl transition-all duration-300 hover:bg-teal-400 active:bg-teal-500">
+          <Link
+            to={"/sign-up"}
+            className="border-2 text-center border-teal-500 text-black dark:text-white p-2 rounded-md w-3xs max-w-3xs self-center shadow-2xl transition-all duration-300 hover:bg-teal-400 active:bg-teal-500"
+          >
             Register
-          </button>
+          </Link>
         </div>
       </div>
     </div>
