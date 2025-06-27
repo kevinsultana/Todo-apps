@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { BaseApi } from "../Api/BaseApi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { GlobalContext } from "../context/globalContext";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const { setUser } = useContext(GlobalContext);
 
   const getDataUser = async () => {
     try {
@@ -57,9 +60,11 @@ export default function Login() {
     }
 
     const user = dataUser.find(
-      (user) => user.username === userName && user.password === password
+      (user) => user.userName === userName && user.password === password
     );
+
     if (user) {
+      setUser(user);
       toast.success("Login successful");
       navigate("/");
     } else {

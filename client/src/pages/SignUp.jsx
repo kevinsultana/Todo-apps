@@ -1,10 +1,11 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { BaseApi } from "../Api/BaseApi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { GlobalContext } from "../context/globalContext";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ export default function SignUp() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const { setUser } = useContext(GlobalContext);
 
   const handleRegister = async () => {
     if (!userName || !password || !confirmPassword) {
@@ -39,6 +42,7 @@ export default function SignUp() {
         password,
       });
       if (response.status === 201) {
+        setUser(response.data);
         toast.success("Registration successful");
         navigate("/");
       }

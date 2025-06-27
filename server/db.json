@@ -1,32 +1,4 @@
 {
-  "user": [
-    {
-      "id": "8ef8",
-      "userName": "kevin",
-      "password": "123"
-    }
-  ],
-  "todos": [
-    {
-      "id": 1,
-      "title": "Learn React",
-      "description": "Learn React",
-      "completed": false,
-      "userId": 1
-    },
-    {
-      "id": 2,
-      "title": "Learn React 1",
-      "description": "Learn React2",
-      "completed": false,
-      "userId": 1
-    },
-    {
-      "id": 3,
-      "title": "Learn React3",
-      "description": "Learn React4",
-      "completed": false,
-      "userId": 2
-    }
-  ]
+  "user": [],
+  "todos": []
 }
