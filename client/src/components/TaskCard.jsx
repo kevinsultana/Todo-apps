@@ -5,7 +5,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 export default function TaskCard() {
   const [showDesc, setShowDesc] = useState(false);
   return (
-    <div className="bg-orange-200 p-2 rounded-xl">
+    <div className="bg-orange-200 p-2 rounded-xl mb-2">
       <div className="flex items-center gap-2">
         <input type="checkbox" style={{ fontSize: "20px" }} />
         <h1

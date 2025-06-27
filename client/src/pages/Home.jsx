@@ -1,16 +1,16 @@
-import React, { use, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { GlobalContext } from "../context/globalContext";
 import { useNavigate } from "react-router";
 import NavBar from "../components/NavBar";
 import { MdAddTask } from "react-icons/md";
 import TaskCard from "../components/TaskCard";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("user"));
   const { user, setUser } = useContext(GlobalContext);
 
-  console.log(user);
   useEffect(() => {
     if (userData) {
       setUser(userData);
@@ -28,9 +28,9 @@ export default function Home() {
   const day = new Date().toLocaleString("en-US", { weekday: "long" });
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen transition-all duration-300">
+    <div className="flex flex-col bg-gray-100 dark:bg-gray-900 min-h-screen transition-all duration-300">
       <NavBar onClickLogout={() => handleLogout()} />
-      <main className=" m-4 bg-white rounded-2xl">
+      <main className="flex-grow m-4 bg-white rounded-2xl shadow-2xl">
         <div className="py-2 px-4">
           {/* head */}
           <div className="flex items-center justify-between">
@@ -49,8 +49,16 @@ export default function Home() {
           </div>
           {/* cards */}
           <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
+          <TaskCard />
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
