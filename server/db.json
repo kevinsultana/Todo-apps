@@ -1,14 +1,9 @@
 {
   "user": [
     {
-      "username": "kevin",
-      "id": 1,
-      "password": "kevin123"
-    },
-    {
-      "username": "admin",
-      "id": 2,
-      "password": "admin123"
+      "id": "8ef8",
+      "userName": "kevin",
+      "password": "123"
     }
   ],
   "todos": [

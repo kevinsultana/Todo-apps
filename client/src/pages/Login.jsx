@@ -92,33 +92,36 @@ export default function Login() {
         </div>
 
         {/* inputs */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mb-2">
+          {/* username */}
           <div className="flex flex-col gap-2">
-            <label htmlFor="username" className="text-black dark:text-white">
-              User Name
-            </label>
+            <label className="text-black dark:text-white">User Name</label>
             <input
               placeholder="Enter your username"
               className="p-2 border rounded-md outline-none text-black dark:text-white"
               onChange={(e) => setUserName(e.target.value)}
+              value={userName}
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="password" className="text-black dark:text-white">
-              Password
-            </label>
+
+          {/* password */}
+          <div className="flex flex-col gap-2 mb-2">
+            <label className="text-black dark:text-white">Password</label>
             <div className="flex p-2 border rounded-md text-black dark:text-white">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 className="w-full outline-none"
                 onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
               <button onClick={togglePasswordVisibility}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
+
+          {/* btn action */}
           <button
             onClick={handleLogin}
             className="bg-teal-500 text-white p-2 rounded-md w-3xs max-w-3xs self-center shadow-2xl transition-all duration-300 hover:bg-teal-600 active:bg-teal-700"
