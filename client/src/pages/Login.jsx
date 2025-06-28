@@ -67,7 +67,7 @@ export default function Login() {
       setUser(user);
       localStorage.setItem("user", JSON.stringify(user));
       toast.success("Login successful");
-      navigate("/");
+      navigate("/", { replace: true });
     } else {
       toast.error("Login failed - Invalid username or password");
     }

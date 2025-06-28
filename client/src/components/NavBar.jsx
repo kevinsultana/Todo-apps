@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { CiLogout } from "react-icons/ci";
+import { FaRegUser } from "react-icons/fa";
 
 export default function NavBar({ onClickLogout }) {
   const [isDarkMode, setIsDarkMode] = useState(
@@ -30,8 +30,8 @@ export default function NavBar({ onClickLogout }) {
         </h1>
       </div>
       <div className="flex items-center gap-6">
-        <button onClick={onClickLogout} className="text-2xl dark:text-white">
-          <CiLogout />
+        <button onClick={onClickLogout} className="text-xl dark:text-white">
+          <FaRegUser />
         </button>
         <button
           onClick={toggleDarkMode}

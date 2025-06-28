@@ -45,7 +45,7 @@ export default function SignUp() {
         setUser(response.data);
         localStorage.setItem("user", JSON.stringify(response.data));
         toast.success("Registration successful");
-        navigate("/");
+        navigate("/", { replace: true });
       }
     } catch (error) {
       console.log(error);

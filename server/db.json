@@ -4,7 +4,43 @@
       "id": "436c",
       "userName": "kevin",
       "password": "123"
+    },
+    {
+      "id": "f780",
+      "userName": "admin",
+      "password": "123"
     }
   ],
-  "todos": []
+  "todos": [
+    {
+      "id": "1",
+      "title": "Todo 1",
+      "description": "Description 1",
+      "isDone": false,
+      "userId": "436c"
+    },
+    {
+      "id": "2",
+      "title": "Todo 2",
+      "description": "Description 2",
+      "isDone": true,
+      "userId": "f780"
+    },
+    {
+      "id": "e86d",
+      "title": "tes",
+      "description": "res",
+      "userId": "436c"
+    },
+    {
+      "id": "c6e6",
+      "userId": "436c"
+    },
+    {
+      "id": "5743",
+      "title": "coba ada ga",
+      "description": "coba aja dulu",
+      "userId": "436c"
+    }
+  ]
 }
