@@ -8,6 +8,8 @@ import Footer from "../components/Footer";
 import UserModal from "../components/UserModal";
 import { BaseApi } from "../Api/BaseApi";
 import AddTaskModal from "../components/AddTaskModal";
+import toast from "react-hot-toast";
+import EditTaskModal from "../components/EditTaskmodal";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -17,6 +19,9 @@ export default function Home() {
 
   const [showUserModal, setShowUserModal] = useState(false);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+  const [showEditTaskModal, setShowEditTaskModal] = useState(false);
+
+  const [selectedDataEdit, setSelectedDataEdit] = useState(null);
   const [userTodos, setUserTodos] = useState([]);
 
   useEffect(() => {
@@ -68,6 +73,23 @@ export default function Home() {
       console.log(response.data);
       getTaskById();
       setShowAddTaskModal(false);
+      toast.success("Task added successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const postEditUserTask = async (title, description, id) => {
+    try {
+      const response = await BaseApi.put(`/todos/${id}`, {
+        title,
+        description,
+        userId: userData.id,
+      });
+      console.log(response.data);
+      getTaskById();
+      setSelectedDataEdit(null);
+      toast.success("Task edited successfully");
     } catch (error) {
       console.log(error);
     }
@@ -105,7 +127,15 @@ export default function Home() {
           {/* cards */}
           <div>
             {userTodos.map((item) => {
-              return <TaskCard key={item.id} item={item} />;
+              return (
+                <TaskCard
+                  key={item.id}
+                  item={item}
+                  onClickEdit={(item) => {
+                    setSelectedDataEdit(item);
+                  }}
+                />
+              );
             })}
           </div>
         </div>
@@ -115,6 +145,14 @@ export default function Home() {
         onCloseModal={() => setShowAddTaskModal(false)}
         onSave={(e) => postUserTask(e.title, e.description)}
       />
+      {selectedDataEdit !== null && (
+        <EditTaskModal
+          isOpen={selectedDataEdit !== null ? true : false}
+          onCloseModal={() => setSelectedDataEdit(null)}
+          task={selectedDataEdit}
+          onEdit={(e) => postEditUserTask(e.title, e.description, e.id)}
+        />
+      )}
       <UserModal
         onClose={() => handleLogout()}
         isOpen={showUserModal}
