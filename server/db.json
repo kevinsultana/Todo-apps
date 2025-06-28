@@ -20,13 +20,6 @@
       "userId": "436c"
     },
     {
-      "id": "2",
-      "title": "Todo 2",
-      "description": "Description 2",
-      "isDone": true,
-      "userId": "f780"
-    },
-    {
       "id": "e86d",
       "title": "tes",
       "description": "res",
@@ -47,42 +40,6 @@
       "title": "adminaja",
       "description": "coba deskripsinya harus 25",
       "userId": "436c"
-    },
-    {
-      "id": "168e",
-      "title": "coba di user ini",
-      "description": "deskripsinya apa aja ya",
-      "userId": "f780"
-    },
-    {
-      "id": "933b",
-      "title": "",
-      "description": "",
-      "userId": "f780"
-    },
-    {
-      "id": "624f",
-      "title": "aa",
-      "description": "a",
-      "userId": "f780"
-    },
-    {
-      "id": "703e",
-      "title": "asdas",
-      "description": "dasd",
-      "userId": "f780"
-    },
-    {
-      "id": "d088",
-      "title": "aa",
-      "description": "a",
-      "userId": "f780"
-    },
-    {
-      "title": "123123",
-      "description": "aaaa123123",
-      "userId": "f780",
-      "id": "dad3"
     }
   ]
 }

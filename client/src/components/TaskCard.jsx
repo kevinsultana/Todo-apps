@@ -3,12 +3,16 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { data } from "react-router";
 
-export default function TaskCard({ item, onClickEdit }) {
+export default function TaskCard({ item, onClickEdit, onClickDelete }) {
   const [showDesc, setShowDesc] = useState(false);
   // console.log(item.item);
 
   const handleEdit = () => {
     onClickEdit(item);
+  };
+
+  const handleDelete = () => {
+    onClickDelete(item);
   };
 
   return (
@@ -37,7 +41,10 @@ export default function TaskCard({ item, onClickEdit }) {
             >
               <MdEdit />
             </button>
-            <button className="text-xl p-1 bg-red-600 rounded-md">
+            <button
+              onClick={handleDelete}
+              className="text-xl p-1 bg-red-600 rounded-md"
+            >
               <MdDelete />
             </button>
           </div>

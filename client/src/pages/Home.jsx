@@ -10,6 +10,7 @@ import { BaseApi } from "../Api/BaseApi";
 import AddTaskModal from "../components/AddTaskModal";
 import toast from "react-hot-toast";
 import EditTaskModal from "../components/EditTaskmodal";
+import DeleteTaskModal from "../components/DeleteTaskModal";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function Home() {
   const [showEditTaskModal, setShowEditTaskModal] = useState(false);
 
   const [selectedDataEdit, setSelectedDataEdit] = useState(null);
+  const [selectedDataDelete, setSelectedDataDelete] = useState(null);
   const [userTodos, setUserTodos] = useState([]);
 
   useEffect(() => {
@@ -95,6 +97,18 @@ export default function Home() {
     }
   };
 
+  const deleteUserTask = async () => {
+    try {
+      const response = await BaseApi.delete(`/todos/${selectedDataDelete.id}`);
+      console.log(response.data);
+      getTaskById();
+      setSelectedDataDelete(null);
+      toast.success("Task deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex flex-col bg-gray-100 dark:bg-gray-900 min-h-screen transition-all duration-300">
       <NavBar onClickLogout={() => setShowUserModal(true)} />
@@ -104,7 +118,7 @@ export default function Home() {
           {dateToday}
         </h1>
       </header>
-      <main className="flex-grow mx-4 bg-white rounded-2xl shadow-2xl">
+      <main className="flex-grow mx-4 mb-4 bg-white rounded-2xl shadow-2xl">
         <div className="py-2 px-4">
           {/* head */}
           <div className="flex items-center justify-between">
@@ -134,6 +148,9 @@ export default function Home() {
                   onClickEdit={(item) => {
                     setSelectedDataEdit(item);
                   }}
+                  onClickDelete={(item) => {
+                    setSelectedDataDelete(item);
+                  }}
                 />
               );
             })}
@@ -151,6 +168,15 @@ export default function Home() {
           onCloseModal={() => setSelectedDataEdit(null)}
           task={selectedDataEdit}
           onEdit={(e) => postEditUserTask(e.title, e.description, e.id)}
+        />
+      )}
+      {selectedDataDelete !== null && (
+        <DeleteTaskModal
+          item={selectedDataDelete}
+          onClickCancel={() => setSelectedDataDelete(null)}
+          onClickDelete={() => {
+            deleteUserTask();
+          }}
         />
       )}
       <UserModal
