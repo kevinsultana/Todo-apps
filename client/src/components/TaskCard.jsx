@@ -3,9 +3,14 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { data } from "react-router";
 
-export default function TaskCard({ item, onClickEdit, onClickDelete }) {
+export default function TaskCard({
+  item,
+  onClickEdit,
+  onClickDelete,
+  onCheckBox,
+}) {
   const [showDesc, setShowDesc] = useState(false);
-  // console.log(item.item);
+  console.log(item.isDone);
 
   const handleEdit = () => {
     onClickEdit(item);
@@ -18,7 +23,12 @@ export default function TaskCard({ item, onClickEdit, onClickDelete }) {
   return (
     <div className="bg-orange-200 p-2 rounded-xl mb-2">
       <div className="flex items-center gap-2">
-        <input type="checkbox" style={{ fontSize: "20px" }} />
+        <input
+          type="checkbox"
+          style={{ fontSize: "20px" }}
+          onChange={(e) => onCheckBox(item, e)}
+          checked={item.isDone}
+        />
         <h1
           onClick={() => setShowDesc(!showDesc)}
           className="text-lg w-full font-bold"

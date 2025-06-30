@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/globalContext";
 import { useNavigate } from "react-router";
 import NavBar from "../components/NavBar";
@@ -24,6 +24,8 @@ export default function Home() {
 
   const [selectedDataEdit, setSelectedDataEdit] = useState(null);
   const [selectedDataDelete, setSelectedDataDelete] = useState(null);
+
+  const [query, setQuery] = useState("");
   const [userTodos, setUserTodos] = useState([]);
 
   useEffect(() => {
@@ -52,9 +54,10 @@ export default function Home() {
   };
 
   const getTaskById = async () => {
+    console.log("jalan saat ngetik");
     try {
       const response = await BaseApi.get(`/todos?userId=${userData.id}`);
-      // console.log(response.data);
+      console.log(response.data);
       setUserTodos(response.data);
     } catch (error) {
       console.log(error);
@@ -63,7 +66,7 @@ export default function Home() {
 
   useEffect(() => {
     getTaskById();
-  }, []);
+  }, [query]);
 
   const postUserTask = async (title, description) => {
     try {
@@ -71,6 +74,7 @@ export default function Home() {
         title,
         description,
         userId: userData.id,
+        isDone: false,
       });
       console.log(response.data);
       getTaskById();
@@ -87,6 +91,7 @@ export default function Home() {
         title,
         description,
         userId: userData.id,
+        isDone: false,
       });
       console.log(response.data);
       getTaskById();
@@ -109,15 +114,38 @@ export default function Home() {
     }
   };
 
+  const updateCompleteTask = async (item, status) => {
+    console.log(item, status);
+    try {
+      const response = await BaseApi.put(`/todos/${item.id}`, {
+        title: item.title,
+        description: item.description,
+        userId: item.userId,
+        isDone: status,
+      });
+
+      getTaskById();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex flex-col bg-gray-100 dark:bg-gray-900 min-h-screen transition-all duration-300">
       <NavBar onClickLogout={() => setShowUserModal(true)} />
       <header className="p-4 text-center">
         <h1 className="text-lg font-bold dark:text-white trasnsition-all duration-300">
-          Welcome {capitalizeFirstLetter(userData?.userName)}, today is{" "}
-          {dateToday}
+          Welcome {userData && capitalizeFirstLetter(userData?.userName)}, today
+          is {dateToday}
         </h1>
       </header>
+      <button
+        id="btn-referesh"
+        onClick={getTaskById}
+        className="text-white text-xl bg bg-red-500 p-4"
+      >
+        Refresh
+      </button>
       <main className="flex-grow mx-4 mb-4 bg-white rounded-2xl shadow-2xl">
         <div className="py-2 px-4">
           {/* head */}
@@ -136,6 +164,8 @@ export default function Home() {
               type="text"
               placeholder="Search task here"
               className="border p-1 text-base"
+              onChange={(e) => setQuery(e.target.value)}
+              value={query}
             />
           </div>
           {/* cards */}
@@ -151,12 +181,25 @@ export default function Home() {
                   onClickDelete={(item) => {
                     setSelectedDataDelete(item);
                   }}
+                  onCheckBox={(item, e) =>
+                    updateCompleteTask(item, e.target.checked)
+                  }
                 />
               );
             })}
           </div>
         </div>
       </main>
+      <div className="rounded-2xl shadow-2xl flex justify-between">
+        <div className="bg-white p-4">
+          <h1>task created</h1>
+          <p>{userTodos.length}</p>
+        </div>
+        <div className="bg-white p-4">
+          <h1>completed task</h1>
+          <p>{userTodos.filter((item) => item.isDone).length}</p>
+        </div>
+      </div>
       <AddTaskModal
         isOpen={showAddTaskModal}
         onCloseModal={() => setShowAddTaskModal(false)}
@@ -164,7 +207,6 @@ export default function Home() {
       />
       {selectedDataEdit !== null && (
         <EditTaskModal
-          isOpen={selectedDataEdit !== null ? true : false}
           onCloseModal={() => setSelectedDataEdit(null)}
           task={selectedDataEdit}
           onEdit={(e) => postEditUserTask(e.title, e.description, e.id)}

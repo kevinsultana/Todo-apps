@@ -10,6 +10,7 @@ import { GlobalContext } from "../context/globalContext";
 export default function Login() {
   const navigate = useNavigate();
   const [dataUser, setDataUser] = useState([]);
+  // console.log(dataUser);
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");

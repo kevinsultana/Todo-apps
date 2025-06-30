@@ -9,37 +9,27 @@
       "id": "f780",
       "userName": "admin",
       "password": "123"
+    },
+    {
+      "id": "d2dd",
+      "userName": "hanna",
+      "password": "123"
     }
   ],
   "todos": [
     {
-      "id": "1",
-      "title": "Todo 1",
-      "description": "Description 1",
+      "title": "tes 1",
+      "description": "testing 1",
+      "userId": "436c",
       "isDone": false,
-      "userId": "436c"
+      "id": "56d2"
     },
     {
-      "id": "e86d",
-      "title": "tes",
-      "description": "res",
-      "userId": "436c"
-    },
-    {
-      "id": "c6e6",
-      "userId": "436c"
-    },
-    {
-      "id": "5743",
-      "title": "coba ada ga",
-      "description": "coba aja dulu",
-      "userId": "436c"
-    },
-    {
-      "id": "356a",
-      "title": "adminaja",
-      "description": "coba deskripsinya harus 25",
-      "userId": "436c"
+      "title": "test 2",
+      "description": "123123",
+      "userId": "436c",
+      "isDone": false,
+      "id": "bc6f"
     }
   ]
 }
