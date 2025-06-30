@@ -4,6 +4,7 @@ import { MdClose } from "react-icons/md";
 export default function AddTaskModal({ onSave, isOpen, onCloseModal }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
   const handleSave = (title, description) => {
     onSave(title, description);
@@ -47,9 +48,20 @@ export default function AddTaskModal({ onSave, isOpen, onCloseModal }) {
                 />
               </div>
 
+              <div>
+                <label className="block">Due Date</label>
+                <input
+                  type="date"
+                  value={dueDate}
+                  placeholder="Description..."
+                  onChange={(e) => setDueDate(e.target.value)}
+                  className="border p-2 w-full"
+                />
+              </div>
+
               <div className="flex justify-center items-center">
                 <button
-                  onClick={() => handleSave({ title, description })}
+                  onClick={() => handleSave({ title, description, dueDate })}
                   className="mt-2 w-1/2 bg-teal-500 text-white py-2 rounded"
                 >
                   Create

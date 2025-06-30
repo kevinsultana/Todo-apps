@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { MdDelete, MdEdit } from "react-icons/md";
-import { data } from "react-router";
 
 export default function TaskCard({
   item,
@@ -19,8 +18,26 @@ export default function TaskCard({
     onClickDelete(item);
   };
 
+  const checkDate = () => {
+    const today = new Date();
+    const dueDate = new Date(item.dueDate);
+
+    const timeDifference = dueDate - today;
+    const dayDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    if (dayDifference === 0) {
+      return "bg-red-200";
+    } else if (dayDifference === 1) {
+      return "bg-yellow-200";
+    } else if (dayDifference > 1) {
+      return "bg-green-200";
+    }
+    return "bg-gray-200";
+  };
+
+  const backgroundColor = checkDate();
+
   return (
-    <div className="bg-orange-200 p-2 rounded-xl mb-2">
+    <div className={`${backgroundColor} p-2 rounded-xl mb-2`}>
       <div className="flex items-center gap-2">
         <input
           type="checkbox"
@@ -43,16 +60,17 @@ export default function TaskCard({
       {showDesc && (
         <>
           <p className="text-sm ml-6 mt-2">{item.description}</p>
+          <p className="text-sm ml-6 mt-2">Deadline : {item.dueDate}</p>
           <div className="flex justify-end gap-4">
             <button
               onClick={handleEdit}
-              className="text-xl p-1 bg-teal-400 rounded-md"
+              className="text-xl p-1 bg-teal-400 dark:bg-teal-600 text-black dark:text-white rounded-md transition-all duration-300"
             >
               <MdEdit />
             </button>
             <button
               onClick={handleDelete}
-              className="text-xl p-1 bg-red-600 rounded-md"
+              className="text-xl p-1 bg-red-400 dark:bg-red-600 text-black dark:text-white transition-all duration-300 rounded-md"
             >
               <MdDelete />
             </button>

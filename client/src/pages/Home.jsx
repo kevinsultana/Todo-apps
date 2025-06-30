@@ -66,13 +66,14 @@ export default function Home() {
     getTaskById();
   }, []);
 
-  const postUserTask = async (title, description) => {
+  const postUserTask = async (title, description, dueDate) => {
     try {
       const response = await BaseApi.post("/todos", {
         title,
         description,
         userId: userData.id,
         isDone: false,
+        dueDate: dueDate,
       });
       console.log(response.data);
       getTaskById();
@@ -136,13 +137,6 @@ export default function Home() {
           is {dateToday}
         </h1>
       </header>
-      <button
-        id="btn-referesh"
-        onClick={getTaskById}
-        className="text-white text-xl bg bg-red-500 p-4"
-      >
-        Refresh
-      </button>
       <main className="flex-grow mx-4 mb-4 bg-white rounded-2xl shadow-2xl">
         <div className="py-2 px-4">
           {/* head */}
@@ -187,12 +181,12 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <div className="rounded-2xl shadow-2xl flex justify-between">
-        <div className="bg-white p-4">
+      <div className=" rounded-2xl  flex justify-between m-4">
+        <div className="bg-white p-4 shadow-xl rounded-2xl text-center">
           <h1>task created</h1>
           <p>{userTodos.length}</p>
         </div>
-        <div className="bg-white p-4">
+        <div className="bg-white p-4 shadow-xl rounded-2xl text-center">
           <h1>completed task</h1>
           <p>{userTodos.filter((item) => item.isDone).length}</p>
         </div>
@@ -200,7 +194,7 @@ export default function Home() {
       <AddTaskModal
         isOpen={showAddTaskModal}
         onCloseModal={() => setShowAddTaskModal(false)}
-        onSave={(e) => postUserTask(e.title, e.description)}
+        onSave={(e) => postUserTask(e.title, e.description, e.dueDate)}
       />
       {selectedDataEdit !== null && (
         <EditTaskModal
