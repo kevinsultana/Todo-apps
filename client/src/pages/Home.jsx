@@ -84,13 +84,14 @@ export default function Home() {
     }
   };
 
-  const postEditUserTask = async (title, description, id) => {
+  const postEditUserTask = async (title, description, id, dueDate) => {
     try {
       const response = await BaseApi.put(`/todos/${id}`, {
         title,
         description,
         userId: userData.id,
         isDone: false,
+        dueDate: dueDate,
       });
       console.log(response.data);
       getTaskById();
@@ -120,6 +121,7 @@ export default function Home() {
         description: item.description,
         userId: item.userId,
         isDone: status,
+        dueDate: item.dueDate,
       });
 
       getTaskById();
@@ -200,7 +202,9 @@ export default function Home() {
         <EditTaskModal
           onCloseModal={() => setSelectedDataEdit(null)}
           task={selectedDataEdit}
-          onEdit={(e) => postEditUserTask(e.title, e.description, e.id)}
+          onEdit={(e) =>
+            postEditUserTask(e.title, e.description, e.id, e.dueDate)
+          }
         />
       )}
       {selectedDataDelete !== null && (

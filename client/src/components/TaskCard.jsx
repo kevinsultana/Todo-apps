@@ -37,7 +37,11 @@ export default function TaskCard({
   const backgroundColor = checkDate();
 
   return (
-    <div className={`${backgroundColor} p-2 rounded-xl mb-2`}>
+    <div
+      className={`${
+        item.isDone !== true ? backgroundColor : "bg-gray-300"
+      } p-2 rounded-xl mb-2`}
+    >
       <div className="flex items-center gap-2">
         <input
           type="checkbox"

@@ -14,48 +14,37 @@
       "id": "d2dd",
       "userName": "hanna",
       "password": "123"
+    },
+    {
+      "id": "aca5",
+      "userName": "dennis",
+      "password": "123"
     }
   ],
   "todos": [
     {
-      "id": "240d",
-      "title": "tes 1",
-      "description": "test 1",
+      "title": "asd",
+      "description": "asdasd",
       "userId": "436c",
       "isDone": false,
-      "dueDate": "2025-07-02"
+      "dueDate": "2025-07-04",
+      "id": "a4ae"
     },
     {
-      "id": "2d7e",
-      "title": "qwe",
-      "description": "qweqw",
-      "userId": "436c",
-      "isDone": false,
-      "dueDate": "2025-07-01"
-    },
-    {
-      "id": "5d55",
       "title": "asd",
       "description": "asd",
       "userId": "436c",
       "isDone": false,
-      "dueDate": "2025-06-30"
+      "dueDate": "2025-06-29",
+      "id": "7642"
     },
     {
-      "id": "a0c4",
-      "title": "task 1asd",
-      "description": "asdfas",
-      "userId": "436c",
+      "title": "mau nikah besok aja lah",
+      "description": "nikahnya minggu depan",
+      "userId": "aca5",
       "isDone": false,
-      "dueDate": "2025-06-29"
-    },
-    {
-      "id": "7f28",
-      "title": "test5",
-      "description": "qowueh",
-      "userId": "436c",
-      "isDone": false,
-      "dueDate": "2025-07-05"
+      "dueDate": "2025-07-01",
+      "id": "5d0a"
     }
   ]
 }

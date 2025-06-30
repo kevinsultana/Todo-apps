@@ -4,9 +4,10 @@ import { MdClose } from "react-icons/md";
 export default function EditTaskModal({ onEdit, onCloseModal, task }) {
   const [title, setTitle] = useState(`${task.title}`);
   const [description, setDescription] = useState(`${task.description}`);
+  const [dueDate, setDueDate] = useState(`${task.dueDate}`);
 
-  const handleSave = (title, description, id) => {
-    onEdit(title, description, id);
+  const handleSave = (title, description, id, dueDate) => {
+    onEdit(title, description, id, dueDate);
     onCloseModal();
   };
 
@@ -40,9 +41,22 @@ export default function EditTaskModal({ onEdit, onCloseModal, task }) {
             />
           </div>
 
+          <div>
+            <label className="block">Due Date</label>
+            <input
+              type="date"
+              value={dueDate}
+              placeholder="Description..."
+              onChange={(e) => setDueDate(e.target.value)}
+              className="border p-2 w-full"
+            />
+          </div>
+
           <div className="flex justify-center items-center">
             <button
-              onClick={() => handleSave({ title, description, id: task.id })}
+              onClick={() =>
+                handleSave({ title, description, id: task.id, dueDate })
+              }
               className="mt-2 w-1/2 bg-teal-500 text-white py-2 rounded"
             >
               Edit
