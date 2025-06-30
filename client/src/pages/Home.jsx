@@ -54,10 +54,8 @@ export default function Home() {
   };
 
   const getTaskById = async () => {
-    console.log("jalan saat ngetik");
     try {
       const response = await BaseApi.get(`/todos?userId=${userData.id}`);
-      console.log(response.data);
       setUserTodos(response.data);
     } catch (error) {
       console.log(error);
@@ -66,7 +64,7 @@ export default function Home() {
 
   useEffect(() => {
     getTaskById();
-  }, [query]);
+  }, []);
 
   const postUserTask = async (title, description) => {
     try {
@@ -115,7 +113,6 @@ export default function Home() {
   };
 
   const updateCompleteTask = async (item, status) => {
-    console.log(item, status);
     try {
       const response = await BaseApi.put(`/todos/${item.id}`, {
         title: item.title,

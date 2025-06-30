@@ -10,7 +10,6 @@ export default function TaskCard({
   onCheckBox,
 }) {
   const [showDesc, setShowDesc] = useState(false);
-  console.log(item.isDone);
 
   const handleEdit = () => {
     onClickEdit(item);
