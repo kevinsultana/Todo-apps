@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { MdDelete, MdEdit } from "react-icons/md";
 
@@ -11,11 +12,19 @@ export default function TaskCard({
   const [showDesc, setShowDesc] = useState(false);
 
   const handleEdit = () => {
-    onClickEdit(item);
+    if (item.isDone === true) {
+      toast.error("Cannot edit completed task.");
+    } else {
+      onClickEdit(item);
+    }
   };
 
   const handleDelete = () => {
-    onClickDelete(item);
+    if (item.isDone === true) {
+      toast.error("Cannot Delete completed task.");
+    } else {
+      onClickDelete(item);
+    }
   };
 
   const checkDate = () => {
@@ -36,6 +45,12 @@ export default function TaskCard({
 
   const backgroundColor = checkDate();
 
+  const todayDate = new Date();
+  const remainingDays =
+    (new Date(item.dueDate) - todayDate) / (1000 * 60 * 60 * 24);
+
+  const daysLeft = Math.ceil(remainingDays);
+
   return (
     <div
       className={`${
@@ -51,11 +66,18 @@ export default function TaskCard({
         />
         <h1
           onClick={() => setShowDesc(!showDesc)}
-          className="text-lg w-full font-bold"
+          className="text-lg flex-1 w-auto font-bold"
         >
           {item.title}
         </h1>
-        <div className="flex">
+        <div className="flex gap-2 items-center">
+          {item.isDone ? (
+            <p className="text-sm">Completed</p>
+          ) : (
+            <p className="text-sm">
+              {daysLeft} {daysLeft === 1 ? "day" : "days"} left
+            </p>
+          )}
           <button onClick={() => setShowDesc(!showDesc)}>
             {showDesc ? <FaChevronUp /> : <FaChevronDown />}
           </button>
@@ -64,20 +86,22 @@ export default function TaskCard({
       {showDesc && (
         <>
           <p className="text-sm ml-6 mt-2">{item.description}</p>
-          <p className="text-sm ml-6 mt-2">Deadline : {item.dueDate}</p>
-          <div className="flex justify-end gap-4">
-            <button
-              onClick={handleEdit}
-              className="text-xl p-1 bg-teal-400 dark:bg-teal-600 text-black dark:text-white rounded-md transition-all duration-300"
-            >
-              <MdEdit />
-            </button>
-            <button
-              onClick={handleDelete}
-              className="text-xl p-1 bg-red-400 dark:bg-red-600 text-black dark:text-white transition-all duration-300 rounded-md"
-            >
-              <MdDelete />
-            </button>
+          <div className="flex justify-between gap-4">
+            <p className="text-sm ml-6 mt-2">Deadline : {item.dueDate}</p>
+            <div className="flex gap-4">
+              <button
+                onClick={handleEdit}
+                className="text-xl p-1 bg-teal-400 dark:bg-teal-600 text-black dark:text-white rounded-md transition-all duration-300 cursor-pointer"
+              >
+                <MdEdit />
+              </button>
+              <button
+                onClick={handleDelete}
+                className="text-xl p-1 bg-red-400 dark:bg-red-600 text-black dark:text-white transition-all duration-300 cursor-pointer rounded-md"
+              >
+                <MdDelete />
+              </button>
+            </div>
           </div>
         </>
       )}
