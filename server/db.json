@@ -1,50 +1,27 @@
 {
   "user": [
     {
-      "id": "436c",
+      "id": "8de6",
       "userName": "kevin",
-      "password": "123"
-    },
-    {
-      "id": "f780",
-      "userName": "admin",
-      "password": "123"
-    },
-    {
-      "id": "d2dd",
-      "userName": "hanna",
-      "password": "123"
-    },
-    {
-      "id": "aca5",
-      "userName": "dennis",
       "password": "123"
     }
   ],
   "todos": [
     {
-      "title": "asd",
-      "description": "asdasd",
-      "userId": "436c",
+      "title": "belajar react",
+      "description": "coba belajar react aja dudlu",
+      "userId": "8de6",
       "isDone": false,
-      "dueDate": "2025-07-04",
-      "id": "a4ae"
+      "dueDate": "2025-07-02",
+      "id": "4baa"
     },
     {
-      "title": "asd",
-      "description": "asd",
-      "userId": "436c",
+      "title": "test",
+      "description": "asdasdasdasfasdfasdfasdfasd",
+      "userId": "8de6",
       "isDone": false,
-      "dueDate": "2025-06-29",
-      "id": "7642"
-    },
-    {
-      "title": "mau nikah besok aja lah",
-      "description": "nikahnya minggu depan",
-      "userId": "aca5",
-      "isDone": false,
-      "dueDate": "2025-07-01",
-      "id": "5d0a"
+      "dueDate": "2025-07-16",
+      "id": "0267"
     }
   ]
 }

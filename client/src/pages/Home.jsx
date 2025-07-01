@@ -75,7 +75,6 @@ export default function Home() {
         isDone: false,
         dueDate: dueDate,
       });
-      console.log(response.data);
       getTaskById();
       setShowAddTaskModal(false);
       toast.success("Task added successfully");
@@ -93,7 +92,6 @@ export default function Home() {
         isDone: false,
         dueDate: dueDate,
       });
-      console.log(response.data);
       getTaskById();
       setSelectedDataEdit(null);
       toast.success("Task edited successfully");
@@ -105,7 +103,6 @@ export default function Home() {
   const deleteUserTask = async () => {
     try {
       const response = await BaseApi.delete(`/todos/${selectedDataDelete.id}`);
-      console.log(response.data);
       getTaskById();
       setSelectedDataDelete(null);
       toast.success("Task deleted successfully");
@@ -163,6 +160,11 @@ export default function Home() {
           </div>
           {/* cards */}
           <div>
+            {userTodos.length === 0 && (
+              <>
+                <h1 className="text-center mt-6">Please Add New Task</h1>
+              </>
+            )}
             {userTodos.map((item) => {
               return (
                 <TaskCard
