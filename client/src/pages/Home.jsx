@@ -1,4 +1,4 @@
-import React, { use, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/globalContext";
 import { useNavigate } from "react-router";
 import NavBar from "../components/NavBar";
@@ -16,17 +16,17 @@ export default function Home() {
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("user"));
   const { user, setUser } = useContext(GlobalContext);
-  // console.log(user);
 
   const [showUserModal, setShowUserModal] = useState(false);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
-  const [showEditTaskModal, setShowEditTaskModal] = useState(false);
 
   const [selectedDataEdit, setSelectedDataEdit] = useState(null);
   const [selectedDataDelete, setSelectedDataDelete] = useState(null);
 
   const [query, setQuery] = useState("");
-  const [userTodos, setUserTodos] = useState([]);
+
+  const [masterTodos, setMasterTodos] = useState([]);
+  const [displayedTodos, setDisplayedTodos] = useState([]);
 
   useEffect(() => {
     if (userData) {
@@ -56,7 +56,8 @@ export default function Home() {
   const getTaskById = async () => {
     try {
       const response = await BaseApi.get(`/todos?userId=${userData.id}`);
-      setUserTodos(response.data);
+      setMasterTodos(response.data);
+      setDisplayedTodos(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +69,7 @@ export default function Home() {
 
   const postUserTask = async (title, description, dueDate) => {
     try {
-      const response = await BaseApi.post("/todos", {
+      await BaseApi.post("/todos", {
         title,
         description,
         userId: userData.id,
@@ -85,7 +86,7 @@ export default function Home() {
 
   const postEditUserTask = async (title, description, id, dueDate) => {
     try {
-      const response = await BaseApi.put(`/todos/${id}`, {
+      await BaseApi.put(`/todos/${id}`, {
         title,
         description,
         userId: userData.id,
@@ -102,7 +103,7 @@ export default function Home() {
 
   const deleteUserTask = async () => {
     try {
-      const response = await BaseApi.delete(`/todos/${selectedDataDelete.id}`);
+      await BaseApi.delete(`/todos/${selectedDataDelete.id}`);
       getTaskById();
       setSelectedDataDelete(null);
       toast.success("Task deleted successfully");
@@ -113,19 +114,34 @@ export default function Home() {
 
   const updateCompleteTask = async (item, status) => {
     try {
-      const response = await BaseApi.put(`/todos/${item.id}`, {
-        title: item.title,
-        description: item.description,
-        userId: item.userId,
+      await BaseApi.put(`/todos/${item.id}`, {
+        ...item,
         isDone: status,
-        dueDate: item.dueDate,
       });
-
       getTaskById();
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setDisplayedTodos(masterTodos);
+      return;
+    }
+
+    const matchingTodos = [];
+    const nonMatchingTodos = [];
+    masterTodos.forEach((todo) => {
+      if (todo.title.toLowerCase().includes(query.toLowerCase())) {
+        matchingTodos.push(todo);
+      } else {
+        nonMatchingTodos.push(todo);
+      }
+    });
+
+    setDisplayedTodos([...matchingTodos, ...nonMatchingTodos]);
+  }, [query, masterTodos]);
 
   return (
     <div className="flex flex-col bg-gray-100 dark:bg-gray-900 min-h-screen transition-all duration-300">
@@ -153,46 +169,41 @@ export default function Home() {
             <input
               type="text"
               placeholder="Search task here"
-              className="border p-1 text-base"
+              className="border p-1 text-base rounded-md"
               onChange={(e) => setQuery(e.target.value)}
               value={query}
             />
           </div>
           {/* cards */}
           <div>
-            {userTodos.length === 0 && (
-              <>
-                <h1 className="text-center mt-6">Please Add New Task</h1>
-              </>
+            {masterTodos.length === 0 && (
+              <h1 className="text-center mt-6">Please Add New Task</h1>
             )}
-            {userTodos.map((item) => {
+            {masterTodos.length > 0 && displayedTodos.length === 0 && (
+              <h1 className="text-center mt-6">No task matches your search.</h1>
+            )}
+            {displayedTodos.map((item) => {
               return (
                 <TaskCard
                   key={item.id}
                   item={item}
-                  onClickEdit={(item) => {
-                    setSelectedDataEdit(item);
-                  }}
-                  onClickDelete={(item) => {
-                    setSelectedDataDelete(item);
-                  }}
-                  onCheckBox={(item, e) =>
-                    updateCompleteTask(item, e.target.checked)
-                  }
+                  onClickEdit={setSelectedDataEdit}
+                  onClickDelete={setSelectedDataDelete}
+                  onCheckBox={(e) => updateCompleteTask(item, e.target.checked)}
                 />
               );
             })}
           </div>
         </div>
       </main>
-      <div className=" rounded-2xl  flex justify-between m-4">
+      <div className=" rounded-2xl flex justify-between m-4">
         <div className="bg-white p-4 shadow-xl rounded-2xl text-center">
           <h1>task created</h1>
-          <p>{userTodos.length}</p>
+          <p>{masterTodos.length}</p>
         </div>
         <div className="bg-white p-4 shadow-xl rounded-2xl text-center">
           <h1>completed task</h1>
-          <p>{userTodos.filter((item) => item.isDone).length}</p>
+          <p>{masterTodos.filter((item) => item.isDone).length}</p>
         </div>
       </div>
       <AddTaskModal
@@ -213,13 +224,11 @@ export default function Home() {
         <DeleteTaskModal
           item={selectedDataDelete}
           onClickCancel={() => setSelectedDataDelete(null)}
-          onClickDelete={() => {
-            deleteUserTask();
-          }}
+          onClickDelete={deleteUserTask}
         />
       )}
       <UserModal
-        onClose={() => handleLogout()}
+        onClose={handleLogout}
         isOpen={showUserModal}
         onCloseModal={() => setShowUserModal(false)}
       />

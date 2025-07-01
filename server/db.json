@@ -11,7 +11,7 @@
       "title": "belajar react",
       "description": "coba belajar react aja dudlu",
       "userId": "8de6",
-      "isDone": true,
+      "isDone": false,
       "dueDate": "2025-07-02",
       "id": "4baa"
     },
@@ -19,7 +19,7 @@
       "title": "test",
       "description": "asdasdasdasfasdfasdfasdfasd",
       "userId": "8de6",
-      "isDone": true,
+      "isDone": false,
       "dueDate": "2025-07-16",
       "id": "0267"
     },
@@ -27,7 +27,7 @@
       "title": "hallo",
       "description": "coba isi deskripsinya aja",
       "userId": "8de6",
-      "isDone": true,
+      "isDone": false,
       "dueDate": "2025-07-01",
       "id": "609d"
     }
