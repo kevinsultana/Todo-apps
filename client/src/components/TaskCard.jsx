@@ -61,7 +61,7 @@ export default function TaskCard({
         <input
           type="checkbox"
           style={{ fontSize: "20px" }}
-          onChange={(e) => onCheckBox(item, e)}
+          onChange={(e) => onCheckBox(item, e.target.checked)}
           checked={item.isDone}
         />
         <h1

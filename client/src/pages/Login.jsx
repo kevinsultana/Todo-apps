@@ -17,8 +17,6 @@ export default function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { setUser } = useContext(GlobalContext);
-
   const getDataUser = async () => {
     try {
       const response = await BaseApi.get("/user");
@@ -65,7 +63,6 @@ export default function Login() {
     );
 
     if (user) {
-      setUser(user);
       localStorage.setItem("user", JSON.stringify(user));
       toast.success("Login successful");
       navigate("/", { replace: true });

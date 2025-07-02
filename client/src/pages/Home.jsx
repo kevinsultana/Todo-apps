@@ -15,7 +15,6 @@ import DeleteTaskModal from "../components/DeleteTaskModal";
 export default function Home() {
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("user"));
-  const { user, setUser } = useContext(GlobalContext);
 
   const [showUserModal, setShowUserModal] = useState(false);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
@@ -29,17 +28,15 @@ export default function Home() {
   const [displayedTodos, setDisplayedTodos] = useState([]);
 
   useEffect(() => {
-    if (userData) {
-      setUser(userData);
-    } else {
+    if (!userData) {
       navigate("/login", { replace: true });
     }
+    return;
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    setUser(null);
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   const day = new Date().toLocaleString("en-US", { weekday: "long" });
@@ -189,7 +186,9 @@ export default function Home() {
                   item={item}
                   onClickEdit={setSelectedDataEdit}
                   onClickDelete={setSelectedDataDelete}
-                  onCheckBox={(e) => updateCompleteTask(item, e.target.checked)}
+                  onCheckBox={(item, status) =>
+                    updateCompleteTask(item, status)
+                  }
                 />
               );
             })}

@@ -19,8 +19,6 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { setUser } = useContext(GlobalContext);
-
   const handleRegister = async () => {
     if (!userName || !password || !confirmPassword) {
       toast.error("Please enter username, password, and confirm password");
@@ -42,7 +40,6 @@ export default function SignUp() {
         password,
       });
       if (response.status === 201) {
-        setUser(response.data);
         localStorage.setItem("user", JSON.stringify(response.data));
         toast.success("Registration successful");
         navigate("/", { replace: true });
