@@ -27,29 +27,30 @@ export default function TaskCard({
     }
   };
 
-  const checkDate = () => {
+  const getDayStatus = () => {
     const today = new Date();
     const dueDate = new Date(item.dueDate);
 
-    const timeDifference = dueDate - today;
-    const dayDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    if (dayDifference === 0) {
-      return "bg-red-200";
-    } else if (dayDifference === 1) {
-      return "bg-yellow-200";
-    } else if (dayDifference > 1) {
-      return "bg-green-200";
+    const timeDifference = dueDate.getTime() - today.getTime();
+    const dayDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+    if (dayDifference === 1) {
+      return { text: "Tommorrow", color: "bg-yellow-200" };
+    } else if (dayDifference === 0) {
+      return { text: "Due Today", color: "bg-red-200" };
+    } else if (dayDifference === -1) {
+      return { text: "Yesterday", color: "bg-gray-400" };
+    } else if (dayDifference < -1) {
+      return {
+        text: `${Math.abs(dayDifference)} days ago`,
+        color: "bg-gray-400",
+      };
+    } else {
+      return { text: `${dayDifference} days left`, color: "bg-green-200" };
     }
-    return "bg-gray-200";
   };
 
-  const backgroundColor = checkDate();
-
-  const todayDate = new Date();
-  const remainingDays =
-    (new Date(item.dueDate) - todayDate) / (1000 * 60 * 60 * 24);
-
-  const daysLeft = Math.ceil(remainingDays);
+  const { text: dayStatusText, color: backgroundColor } = getDayStatus();
 
   return (
     <div
@@ -74,9 +75,7 @@ export default function TaskCard({
           {item.isDone ? (
             <p className="text-sm">Completed</p>
           ) : (
-            <p className="text-sm">
-              {daysLeft} {daysLeft === 1 ? "day" : "days"} left
-            </p>
+            <p className="text-sm">{dayStatusText}</p>
           )}
           <button onClick={() => setShowDesc(!showDesc)}>
             {showDesc ? <FaChevronUp /> : <FaChevronDown />}
