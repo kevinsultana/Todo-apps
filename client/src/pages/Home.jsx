@@ -11,6 +11,7 @@ import AddTaskModal from "../components/AddTaskModal";
 import toast from "react-hot-toast";
 import EditTaskModal from "../components/EditTaskmodal";
 import DeleteTaskModal from "../components/DeleteTaskModal";
+import TaskCounter from "../components/TaskCounter";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -180,7 +181,7 @@ export default function Home() {
                 Please Add New Task
               </h1>
             )}
-            <div className="grid grid-cols-1 lg:grid-cols-2  gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {displayedTodos.map((item) => {
                 return (
                   <TaskCard
@@ -198,15 +199,11 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <div className="rounded-2xl flex justify-between m-4 lg:min-w-4xl lg:self-center">
-        <div className="bg-white p-4 shadow-xl rounded-2xl text-center">
-          <h1>task created</h1>
-          <p>{masterTodos.length}</p>
-        </div>
-        <div className="bg-white p-4 shadow-xl rounded-2xl text-center">
-          <h1>completed task</h1>
-          <p>{masterTodos.filter((item) => item.isDone).length}</p>
-        </div>
+      <div className="flex justify-center bg-white dark:bg-gray-500 rounded-2xl m-4 lg:min-w-4xl lg:self-center">
+        <TaskCounter
+          total={masterTodos.length}
+          completed={masterTodos.filter((item) => item.isDone).length}
+        />
       </div>
       <AddTaskModal
         isOpen={showAddTaskModal}
