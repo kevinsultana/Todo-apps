@@ -144,19 +144,21 @@ export default function Home() {
     <div className="flex flex-col bg-gray-100 dark:bg-gray-900 min-h-screen transition-all duration-300">
       <NavBar onClickLogout={() => setShowUserModal(true)} />
       <header className="p-4 text-center">
-        <h1 className="text-lg font-bold dark:text-white trasnsition-all duration-300">
-          Welcome {userData && capitalizeFirstLetter(userData?.userName)}, today
+        <h1 className="text-lg lg:text-2xl font-bold dark:text-white trasnsition-all duration-300">
+          Hello {userData && capitalizeFirstLetter(userData?.userName)}, today
           is {dateToday}
         </h1>
       </header>
-      <main className="flex-grow mx-4 mb-4 bg-white rounded-2xl shadow-2xl">
+      <main className="flex-grow mx-4 mb-4 bg-white dark:bg-gray-500 rounded-2xl shadow-2xl lg:min-w-4xl lg:self-center">
         <div className="py-2 px-4">
           {/* head */}
           <div className="flex items-center justify-between">
-            <h1 className="text-xl">{day}</h1>
+            <h1 className="text-xl lg:text-2xl dark:text-white text-black">
+              {day}
+            </h1>
             <button
               onClick={() => setShowAddTaskModal(true)}
-              className="text-2xl px-4 py-1 bg-teal-500 rounded-xl text-white"
+              className="text-2xl lg:text-3xl px-4 py-1 bg-teal-500 rounded-xl text-white"
             >
               <MdAddTask />
             </button>
@@ -166,7 +168,7 @@ export default function Home() {
             <input
               type="text"
               placeholder="Search task here"
-              className="border p-1 text-base rounded-md"
+              className="border p-1 text-base rounded-md max-w-1/2 w-full dark:border-white focus:outline-none dark:text-white lg:text-xl lg:p-2"
               onChange={(e) => setQuery(e.target.value)}
               value={query}
             />
@@ -174,28 +176,29 @@ export default function Home() {
           {/* cards */}
           <div>
             {masterTodos.length === 0 && (
-              <h1 className="text-center mt-6">Please Add New Task</h1>
+              <h1 className="text-center mt-6 text-black dark:text-white text-xl lg:text-2xl">
+                Please Add New Task
+              </h1>
             )}
-            {masterTodos.length > 0 && displayedTodos.length === 0 && (
-              <h1 className="text-center mt-6">No task matches your search.</h1>
-            )}
-            {displayedTodos.map((item) => {
-              return (
-                <TaskCard
-                  key={item.id}
-                  item={item}
-                  onClickEdit={setSelectedDataEdit}
-                  onClickDelete={setSelectedDataDelete}
-                  onCheckBox={(item, status) =>
-                    updateCompleteTask(item, status)
-                  }
-                />
-              );
-            })}
+            <div className="grid grid-cols-1 lg:grid-cols-2  gap-4">
+              {displayedTodos.map((item) => {
+                return (
+                  <TaskCard
+                    key={item.id}
+                    item={item}
+                    onClickEdit={setSelectedDataEdit}
+                    onClickDelete={setSelectedDataDelete}
+                    onCheckBox={(item, status) =>
+                      updateCompleteTask(item, status)
+                    }
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </main>
-      <div className=" rounded-2xl flex justify-between m-4">
+      <div className="rounded-2xl flex justify-between m-4 lg:min-w-4xl lg:self-center">
         <div className="bg-white p-4 shadow-xl rounded-2xl text-center">
           <h1>task created</h1>
           <p>{masterTodos.length}</p>
