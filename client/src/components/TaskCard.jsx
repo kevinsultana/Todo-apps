@@ -46,7 +46,7 @@ export default function TaskCard({
     const dayDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
     if (dayDifference === 1) {
-      return { text: "Tommorrow", color: "bg-yellow-200" };
+      return { text: "Tomorrow", color: "bg-yellow-200" };
     } else if (dayDifference === 0) {
       return { text: "Due Today", color: "bg-red-200" };
     } else if (dayDifference === -1) {
@@ -63,11 +63,16 @@ export default function TaskCard({
 
   const { text: dayStatusText, color: backgroundColor } = getDayStatus();
 
+  const formatDate = (date) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(date).toLocaleDateString("en-ID", options);
+  };
+
   return (
     <div
       className={`${
         item.isDone !== true ? backgroundColor : "bg-gray-300"
-      } p-2 rounded-xl mb-2`}
+      } p-2 rounded-xl mb-2 h-full flex flex-col`}
     >
       <div className="flex items-center gap-2">
         <input
@@ -76,12 +81,14 @@ export default function TaskCard({
           onChange={(e) => onCheckBox(item, e.target.checked)}
           checked={item.isDone}
         />
+        {/* mobile */}
         <h1
           onClick={() => setShowDesc(!showDesc)}
           className="text-lg flex-1 w-auto font-bold lg:hidden"
         >
           {item.title}
         </h1>
+        {/* desktop */}
         <h1 className="text-2xl flex-1 w-auto font-bold hidden lg:block">
           {item.title}
         </h1>
@@ -99,13 +106,13 @@ export default function TaskCard({
         </div>
       </div>
       {showDesc && (
-        <>
-          <p className="text-sm lg:text-base ml-6 my-2 text-wrap max-w-4/5 lg:max-w-xs">
-            {item.description}
-          </p>
+        <div className="flex flex-col justify-between h-full">
+          <div className="ml-6 my-2 max-w-4/5 lg:max-w-xs flex-1">
+            <p className="text-sm lg:text-base ">{item.description}</p>
+          </div>
           <div className="flex justify-between gap-4">
             <p className="text-sm lg:text-base ml-6 mt-2">
-              Deadline : {item.dueDate}
+              Deadline : {formatDate(item.dueDate)}
             </p>
             <div className="flex gap-4">
               <button
@@ -122,7 +129,7 @@ export default function TaskCard({
               </button>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
