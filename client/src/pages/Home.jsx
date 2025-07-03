@@ -55,7 +55,7 @@ export default function Home() {
     try {
       const response = await BaseApi.get(`/todos?userId=${userData.id}`);
       setMasterTodos(response.data);
-      setDisplayedTodos(response.data);
+      // setDisplayedTodos(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -64,6 +64,17 @@ export default function Home() {
   useEffect(() => {
     getTaskById();
   }, []);
+
+  // console.log(masterTodos);
+
+  useEffect(() => {
+    const sortedTodos = [...masterTodos].sort((a, b) => {
+      if (a.isDone && !b.isDone) return 1;
+      if (!a.isDone && b.isDone) return -1;
+      return 0;
+    });
+    setDisplayedTodos(sortedTodos);
+  }, [masterTodos]);
 
   const postUserTask = async (title, description, dueDate) => {
     try {
@@ -123,7 +134,6 @@ export default function Home() {
   };
 
   const handleSaveEditUser = async (name, password, id) => {
-    // console.log(name, password, id, "edit di home");
     try {
       const response = await BaseApi.put(`/user/${id}`, {
         id: id,
@@ -133,7 +143,6 @@ export default function Home() {
       setShowUserModal(false);
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(response.data));
-      // console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -156,7 +165,7 @@ export default function Home() {
     });
 
     setDisplayedTodos([...matchingTodos, ...nonMatchingTodos]);
-  }, [query, masterTodos]);
+  }, [query]);
 
   return (
     <div className="flex flex-col bg-gray-100 dark:bg-gray-900 min-h-screen transition-all duration-300">
@@ -167,7 +176,7 @@ export default function Home() {
           is {dateToday}
         </h1>
       </header>
-      <main className="flex-grow mx-4 mb-4 bg-white dark:bg-gray-500 rounded-2xl shadow-2xl lg:min-w-4xl lg:self-center">
+      <main className="flex-grow mx-4 mb-4 pb-4 bg-white dark:bg-gray-500 rounded-2xl shadow-2xl lg:min-w-4xl lg:self-center">
         <div className="py-2 px-4">
           {/* head */}
           <div className="flex items-center justify-between">
