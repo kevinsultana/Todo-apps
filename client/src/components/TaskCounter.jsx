@@ -4,7 +4,7 @@ export default function TaskCounter({ total, completed }) {
   const progress = (completed / total) * 100;
 
   return (
-    <div className="flex w-full justify-between items-center px-4 py-1">
+    <div className="flex w-full justify-between items-center px-10 py-1">
       <div className="flex flex-col items-center">
         <h1 className="font-bold text-2xl text-black dark:text-white">
           Complete Task

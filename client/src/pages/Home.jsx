@@ -122,6 +122,23 @@ export default function Home() {
     }
   };
 
+  const handleSaveEditUser = async (name, password, id) => {
+    // console.log(name, password, id, "edit di home");
+    try {
+      const response = await BaseApi.put(`/user/${id}`, {
+        id: id,
+        userName: name,
+        password: password,
+      });
+      setShowUserModal(false);
+      localStorage.removeItem("user");
+      localStorage.setItem("user", JSON.stringify(response.data));
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (!query.trim()) {
       setDisplayedTodos(masterTodos);
@@ -214,8 +231,8 @@ export default function Home() {
         <EditTaskModal
           onCloseModal={() => setSelectedDataEdit(null)}
           task={selectedDataEdit}
-          onEdit={(e) =>
-            postEditUserTask(e.title, e.description, e.id, e.dueDate)
+          onEdit={(title, description, id, dueDate) =>
+            postEditUserTask(title, description, id, dueDate)
           }
         />
       )}
@@ -227,9 +244,13 @@ export default function Home() {
         />
       )}
       <UserModal
+        userData={userData}
         onClose={handleLogout}
         isOpen={showUserModal}
         onCloseModal={() => setShowUserModal(false)}
+        onSaveEditUser={(name, password, id) =>
+          handleSaveEditUser(name, password, id)
+        }
       />
       <Footer />
     </div>

@@ -1,9 +1,28 @@
 import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 
-export default function UserModal({ onClose, isOpen, onCloseModal }) {
-  const [editName, setEditName] = useState("");
-  const [editPassword, setEditPassword] = useState("");
+export default function UserModal({
+  onClose,
+  isOpen,
+  onCloseModal,
+  userData,
+  onSaveEditUser,
+}) {
+  const [editName, setEditName] = useState(`${userData.userName}`);
+  const [editPassword, setEditPassword] = useState(`${userData.password}`);
+  const [isEditing, setIsEditing] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleSaveEditUser = () => {
+    onSaveEditUser(editName, editPassword, userData.id);
+    setIsEditing(false);
+    setShowPassword(false);
+  };
 
   return (
     <div>
@@ -18,36 +37,69 @@ export default function UserModal({ onClose, isOpen, onCloseModal }) {
               />
             </div>
             <div className="space-y-4">
-              <div>
-                <label className="block">Edit Name</label>
-                <input
-                  type="text"
-                  value={editName}
-                  onChange={(e) => setEditName(e.target.value)}
-                  className="border p-2 w-full"
-                />
-                <button className="mt-2 w-full bg-blue-500 text-white py-2 rounded">
-                  Save Name
-                </button>
-              </div>
+              {isEditing ? (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block">Edit Name</label>
+                    <input
+                      type="text"
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                      className="border p-2 w-full"
+                    />
+                  </div>
 
-              <div>
-                <label className="block">Edit Password</label>
-                <input
-                  type="password"
-                  value={editPassword}
-                  onChange={(e) => setEditPassword(e.target.value)}
-                  className="border p-2 w-full"
-                />
-                <button className="mt-2 w-full bg-blue-500 text-white py-2 rounded">
-                  Save Password
-                </button>
-              </div>
+                  <div>
+                    <label className="block">Edit Password</label>
+                    <div className="flex p-2 border rounded-md text-black ">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={editPassword}
+                        onChange={(e) => setEditPassword(e.target.value)}
+                        className="w-full outline-none"
+                      />
+                      <button onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-6 justify-between">
+                    <button
+                      onClick={handleSaveEditUser}
+                      className="mt-2 w-1/2 bg-blue-500 text-white py-2 rounded"
+                    >
+                      Save Changes
+                    </button>
+                    <button
+                      onClick={handleEditToggle}
+                      className="mt-2 w-1/2 bg-gray-300 text-black py-2 rounded"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col">
+                  <div className="flex flex-col space-y-4 mb-4">
+                    <span>Name: {editName || "Your Name"}</span>
+                    <span>
+                      Password: {editPassword ? "••••••" : "No Password Set"}
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleEditToggle}
+                    className="mt-2 w-1/2 bg-blue-500 text-white py-2 rounded self-center"
+                  >
+                    Edit
+                  </button>
+                </div>
+              )}
 
               <div className="flex justify-center items-center">
                 <button
                   onClick={onClose}
-                  className="mt-2 w-1/2 bg-red-500 text-white py-2 rounded"
+                  className=" w-1/2 bg-red-500 text-white py-2 rounded"
                 >
                   Logout
                 </button>
