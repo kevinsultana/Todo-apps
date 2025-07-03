@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { BaseApi } from "../Api/BaseApi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import { GlobalContext } from "../context/globalContext";
 
 export default function SignUp() {
   const navigate = useNavigate();

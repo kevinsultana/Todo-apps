@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
+import DeleteUserModal from "./DeleteUserModal";
 
 export default function UserModal({
   onClose,
@@ -8,11 +9,13 @@ export default function UserModal({
   onCloseModal,
   userData,
   onSaveEditUser,
+  onDeleteUser,
 }) {
   const [editName, setEditName] = useState(`${userData.userName}`);
   const [editPassword, setEditPassword] = useState(`${userData.password}`);
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -20,6 +23,13 @@ export default function UserModal({
 
   const handleSaveEditUser = () => {
     onSaveEditUser(editName, editPassword, userData.id);
+    setIsEditing(false);
+    setShowPassword(false);
+  };
+
+  const handleDeleteUser = () => {
+    onDeleteUser(userData);
+    setShowConfirm(false);
     setIsEditing(false);
     setShowPassword(false);
   };
@@ -87,12 +97,20 @@ export default function UserModal({
                       Password: {editPassword ? "••••••" : "No Password Set"}
                     </span>
                   </div>
-                  <button
-                    onClick={handleEditToggle}
-                    className="mt-2 w-1/2 bg-blue-500 text-white py-2 rounded self-center"
-                  >
-                    Edit
-                  </button>
+                  <div className="flex gap-6 justify-between">
+                    <button
+                      onClick={handleEditToggle}
+                      className="mt-2 w-1/2 bg-blue-500 text-white py-2 rounded self-center"
+                    >
+                      Edit User
+                    </button>
+                    <button
+                      onClick={() => setShowConfirm(true)}
+                      className="mt-2 w-1/2 bg-red-500 text-white py-2 rounded self-center"
+                    >
+                      Delete User
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -107,6 +125,13 @@ export default function UserModal({
             </div>
           </div>
         </div>
+      )}
+      {showConfirm && (
+        <DeleteUserModal
+          onClickCancel={() => setShowConfirm(false)}
+          onClickDelete={handleDeleteUser}
+          item={userData}
+        />
       )}
     </div>
   );

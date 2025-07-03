@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../context/globalContext";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import NavBar from "../components/NavBar";
 import { MdAddTask } from "react-icons/md";
@@ -55,7 +54,6 @@ export default function Home() {
     try {
       const response = await BaseApi.get(`/todos?userId=${userData.id}`);
       setMasterTodos(response.data);
-      // setDisplayedTodos(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -64,8 +62,6 @@ export default function Home() {
   useEffect(() => {
     getTaskById();
   }, []);
-
-  // console.log(masterTodos);
 
   useEffect(() => {
     const sortedTodos = [...masterTodos].sort((a, b) => {
@@ -143,6 +139,23 @@ export default function Home() {
       setShowUserModal(false);
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteUser = async (user) => {
+    setShowUserModal(false);
+    // console.log(user, "dihome");
+    try {
+      await BaseApi.delete(`/user/${user.id}`);
+      const todosResponse = await BaseApi.get(`/todos?userId=${user.id}`);
+      const todos = todosResponse.data;
+      for (const todo of todos) {
+        await BaseApi.delete(`/todos/${todo.id}`);
+      }
+      localStorage.removeItem("user");
+      navigate("/login", { replace: true });
     } catch (error) {
       console.log(error);
     }
@@ -256,6 +269,7 @@ export default function Home() {
         userData={userData}
         onClose={handleLogout}
         isOpen={showUserModal}
+        onDeleteUser={handleDeleteUser}
         onCloseModal={() => setShowUserModal(false)}
         onSaveEditUser={(name, password, id) =>
           handleSaveEditUser(name, password, id)

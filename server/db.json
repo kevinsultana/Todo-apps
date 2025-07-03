@@ -1,83 +1,19 @@
 {
   "user": [
     {
-      "id": "8de6",
-      "userName": "kevin1",
-      "password": "123"
+      "id": "eb00",
+      "userName": "kevin123",
+      "password": "123123"
     }
   ],
   "todos": [
     {
-      "id": "17d8",
-      "title": "asdasd",
-      "description": "asfdasdfasdf asfg asfdva sdf",
-      "userId": "8de6",
-      "isDone": true,
-      "dueDate": "2025-07-16"
-    },
-    {
-      "title": "coba buat apa",
-      "description": "coba buat apalagi untuk teldf lasjdhflakjsh dflkajs df",
-      "userId": "8de6",
+      "id": "a010",
+      "title": "hallo",
+      "description": "halo apa kabarnya lagi coba testing",
+      "userId": "eb00",
       "isDone": false,
-      "dueDate": "2025-07-03",
-      "id": "eaac"
-    },
-    {
-      "id": "a0ce",
-      "title": "hajksdjhfgasdfhg",
-      "description": "asdfljhalsdkjfhlaskdjfhlaskjdf",
-      "userId": "8de6",
-      "isDone": false,
-      "dueDate": "2025-07-03"
-    },
-    {
-      "id": "ff63",
-      "title": "asdlfhkjgalsdhfg",
-      "description": "alsdfkjalsdkufhalsdufhlaks",
-      "userId": "8de6",
-      "isDone": false,
-      "dueDate": "2025-07-18"
-    },
-    {
-      "title": "kevin",
-      "description": "12312312312312341234123412asdasd",
-      "userId": "8de6",
-      "isDone": true,
-      "dueDate": "2025-07-04",
-      "id": "d65c"
-    },
-    {
-      "id": "d8a9",
-      "title": "123",
-      "description": "kevin sultana herhlasmnida",
-      "userId": "8de6",
-      "isDone": false,
-      "dueDate": "2025-07-08"
-    },
-    {
-      "id": "b611",
-      "title": "`123`12",
-      "description": "erqwer efsnefgnsdgfnsdfgbsdfg",
-      "userId": "8de6",
-      "isDone": false,
-      "dueDate": "2025-07-11"
-    },
-    {
-      "id": "e539",
-      "title": "wsebgsdbgsbdg",
-      "description": "awbrwerbsdgbseartbzsdfbasrgbse",
-      "userId": "8de6",
-      "isDone": false,
-      "dueDate": "2025-07-19"
-    },
-    {
-      "id": "607f",
-      "title": "arbtasfgbasdfba",
-      "description": "sdfbasfbqrtbasfbsdfbawbtaert",
-      "userId": "8de6",
-      "isDone": false,
-      "dueDate": "2025-07-11"
+      "dueDate": "2025-07-12"
     }
   ]
 }
