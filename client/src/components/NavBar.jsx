@@ -22,7 +22,7 @@ export default function NavBar({ onClickLogout }) {
     setIsDarkMode(!isDarkMode);
   };
   return (
-    <div className="flex px-4 py-2 lg:px-100 items-center justify-between bg-teal-100 dark:bg-teal-700 shadow-2xl shadow-black/30 trasnition-all duration-300">
+    <div className="flex px-4 py-2 lg:px-80 items-center justify-between bg-teal-100 dark:bg-teal-700 shadow-2xl shadow-black/30 trasnition-all duration-300">
       <div className="flex items-center gap-2">
         <img src={logo} alt="logo" className="w-6 lg:w-10" />
         <h1 className="text-lg font-bold lg:text-2xl text-black dark:text-white">

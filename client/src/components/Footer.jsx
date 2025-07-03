@@ -7,9 +7,27 @@ export default function Footer() {
     <div className="bg-teal-100 dark:bg-teal-700 transition-all duration-300">
       <div className="space-y-1 py-1">
         <div className="flex items-center justify-center gap-4">
-          <FaLinkedinIn className="text-lg lg:text-2xl dark:text-white" />
-          <FaGithub className="text-lg lg:text-2xl dark:text-white" />
-          <CgWebsite className="text-lg lg:text-2xl dark:text-white" />
+          <FaLinkedinIn
+            onClick={() =>
+              window.open(
+                "https://www.linkedin.com/in/kevinsultanaherman/",
+                "_blank"
+              )
+            }
+            className="text-lg lg:text-2xl dark:text-white hover:scale-120 hover:text-red-600 cursor-pointer transition-all duration-300"
+          />
+          <FaGithub
+            onClick={() =>
+              window.open("https://github.com/kevinsultana", "_blank")
+            }
+            className="text-lg lg:text-2xl dark:text-white hover:scale-120 hover:text-red-600 cursor-pointer transition-all duration-300"
+          />
+          <CgWebsite
+            onClick={() =>
+              window.open("https://kevinsultana.carrd.co/", "_blank")
+            }
+            className="text-lg lg:text-2xl dark:text-white hover:scale-120 hover:text-red-600 cursor-pointer transition-all duration-300"
+          />
         </div>
         <div>
           <p className="text-center text-sm lg:text-base dark:text-white">
