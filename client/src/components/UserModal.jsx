@@ -38,7 +38,7 @@ export default function UserModal({
     <div>
       {isOpen && (
         <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 lg:w-1/4">
             <div className="flex justify-between">
               <h2 className="text-xl mb-4">User Menu</h2>
               <MdClose
