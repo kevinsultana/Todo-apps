@@ -32,9 +32,10 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!userData) {
+    if (userData === null) {
       navigate("/login", { replace: true });
     }
+    return;
   }, []);
 
   const handleLogout = () => {
@@ -56,7 +57,7 @@ export default function Home() {
   const getTaskById = async () => {
     setLoading(true);
     try {
-      const response = await BaseApi.get(`/todos?userId=${userData.id}`);
+      const response = await BaseApi.get(`/todos?userId=${userData?.id}`);
       setMasterTodos(response.data);
       setLoading(false);
     } catch (error) {
@@ -84,7 +85,7 @@ export default function Home() {
       await BaseApi.post("/todos", {
         title,
         description,
-        userId: userData.id,
+        userId: userData?.id,
         isDone: false,
         dueDate: dueDate,
       });
@@ -103,7 +104,7 @@ export default function Home() {
       await BaseApi.put(`/todos/${id}`, {
         title,
         description,
-        userId: userData.id,
+        userId: userData?.id,
         isDone: false,
         dueDate: dueDate,
       });
@@ -205,8 +206,9 @@ export default function Home() {
       {loading && <LoadingModal />}
       <header className="p-4 text-center">
         <h1 className="text-lg lg:text-2xl font-bold dark:text-white trasnsition-all duration-300">
-          Hello {userData && capitalizeFirstLetter(userData?.userName)}, today
-          is {dateToday}
+          Hello{" "}
+          {userData?.userName && capitalizeFirstLetter(userData?.userName)},
+          today is {dateToday}
         </h1>
       </header>
       <main className="flex-grow mx-4 mb-4 pb-4 bg-white dark:bg-gray-500 rounded-2xl shadow-2xl lg:min-w-4xl lg:self-center">

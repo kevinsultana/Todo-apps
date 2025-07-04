@@ -11,8 +11,8 @@ export default function UserModal({
   onSaveEditUser,
   onDeleteUser,
 }) {
-  const [editName, setEditName] = useState(`${userData.userName}`);
-  const [editPassword, setEditPassword] = useState(`${userData.password}`);
+  const [editName, setEditName] = useState(`${userData?.userName}`);
+  const [editPassword, setEditPassword] = useState(`${userData?.password}`);
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -22,7 +22,7 @@ export default function UserModal({
   };
 
   const handleSaveEditUser = () => {
-    onSaveEditUser(editName, editPassword, userData.id);
+    onSaveEditUser(editName, editPassword, userData?.id);
     setIsEditing(false);
     setShowPassword(false);
   };
