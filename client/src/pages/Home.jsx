@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import EditTaskModal from "../components/EditTaskmodal";
 import DeleteTaskModal from "../components/DeleteTaskModal";
 import TaskCounter from "../components/TaskCounter";
+import LoadingModal from "../components/LoadingModal";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ export default function Home() {
 
   const [masterTodos, setMasterTodos] = useState([]);
   const [displayedTodos, setDisplayedTodos] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!userData) {
@@ -51,10 +54,13 @@ export default function Home() {
   };
 
   const getTaskById = async () => {
+    setLoading(true);
     try {
       const response = await BaseApi.get(`/todos?userId=${userData.id}`);
       setMasterTodos(response.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(true);
       console.log(error);
     }
   };
@@ -73,6 +79,7 @@ export default function Home() {
   }, [masterTodos]);
 
   const postUserTask = async (title, description, dueDate) => {
+    setLoading(true);
     try {
       await BaseApi.post("/todos", {
         title,
@@ -85,11 +92,13 @@ export default function Home() {
       setShowAddTaskModal(false);
       toast.success("Task added successfully");
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
 
   const postEditUserTask = async (title, description, id, dueDate) => {
+    setLoading(true);
     try {
       await BaseApi.put(`/todos/${id}`, {
         title,
@@ -102,22 +111,26 @@ export default function Home() {
       setSelectedDataEdit(null);
       toast.success("Task edited successfully");
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
 
   const deleteUserTask = async () => {
+    setLoading(true);
     try {
       await BaseApi.delete(`/todos/${selectedDataDelete.id}`);
       getTaskById();
       setSelectedDataDelete(null);
       toast.success("Task deleted successfully");
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
 
   const updateCompleteTask = async (item, status) => {
+    setLoading(true);
     try {
       await BaseApi.put(`/todos/${item.id}`, {
         ...item,
@@ -125,38 +138,44 @@ export default function Home() {
       });
       getTaskById();
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
 
   const handleSaveEditUser = async (name, password, id) => {
+    setLoading(true);
     try {
-      const response = await BaseApi.put(`/user/${id}`, {
+      const response = await BaseApi.put(`/users/${id}`, {
         id: id,
         userName: name,
         password: password,
       });
+      setLoading(false);
       setShowUserModal(false);
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(response.data));
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
 
   const handleDeleteUser = async (user) => {
+    setLoading(true);
     setShowUserModal(false);
-    // console.log(user, "dihome");
     try {
-      await BaseApi.delete(`/user/${user.id}`);
+      await BaseApi.delete(`/users/${user.id}`);
       const todosResponse = await BaseApi.get(`/todos?userId=${user.id}`);
       const todos = todosResponse.data;
       for (const todo of todos) {
         await BaseApi.delete(`/todos/${todo.id}`);
       }
       localStorage.removeItem("user");
+      setLoading(false);
       navigate("/login", { replace: true });
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -183,6 +202,7 @@ export default function Home() {
   return (
     <div className="flex flex-col bg-gray-100 dark:bg-gray-900 min-h-screen transition-all duration-300">
       <NavBar onClickLogout={() => setShowUserModal(true)} />
+      {loading && <LoadingModal />}
       <header className="p-4 text-center">
         <h1 className="text-lg lg:text-2xl font-bold dark:text-white trasnsition-all duration-300">
           Hello {userData && capitalizeFirstLetter(userData?.userName)}, today

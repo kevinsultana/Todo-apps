@@ -5,6 +5,7 @@ import { BaseApi } from "../Api/BaseApi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import LoadingModal from "../components/LoadingModal";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function SignUp() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
     if (!userName || !password || !confirmPassword) {
@@ -33,26 +35,33 @@ export default function SignUp() {
       toast.error("Username already exists");
       return;
     }
+    setLoading(true);
     try {
-      const response = await BaseApi.post("/user", {
+      const response = await BaseApi.post("/users", {
         userName,
         password,
       });
       if (response.status === 201) {
+        setLoading(false);
         localStorage.setItem("user", JSON.stringify(response.data));
         toast.success("Registration successful");
         navigate("/", { replace: true });
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
 
   const getDataUser = async () => {
+    setLoading(true);
     try {
-      const response = await BaseApi.get("/user");
+      const response = await BaseApi.get("/users");
       setDataUser(response.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -89,6 +98,7 @@ export default function SignUp() {
 
   return (
     <div className="flex bg-gray-50 dark:bg-gray-800 transition-all duration-300 justify-center items-center h-screen">
+      {loading && <LoadingModal />}
       {/* container */}
       <div className="p-4 bg-white dark:bg-gray-500 shadow-2xl w-sm rounded-xl">
         {/* btn dark mode */}

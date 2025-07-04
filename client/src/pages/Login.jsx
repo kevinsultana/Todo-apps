@@ -5,6 +5,7 @@ import { BaseApi } from "../Api/BaseApi";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import LoadingModal from "../components/LoadingModal";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -16,11 +17,16 @@ export default function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const getDataUser = async () => {
+    setLoading(true);
     try {
-      const response = await BaseApi.get("/user");
+      const response = await BaseApi.get("/users");
       setDataUser(response.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -72,6 +78,7 @@ export default function Login() {
 
   return (
     <div className="flex bg-gray-50 dark:bg-gray-800 transition-all duration-300 justify-center items-center h-screen">
+      {loading && <LoadingModal />}
       {/* container */}
       <div className="p-4 bg-white dark:bg-gray-500 shadow-2xl w-sm rounded-xl transition-all duration-300">
         {/* btn dark mode */}
@@ -85,7 +92,6 @@ export default function Login() {
             {isDarkMode ? <MdDarkMode /> : <MdOutlineLightMode />}
           </button>
         </div>
-
         {/* logo and title */}
         <div className="flex flex-col gap-4 items-center mb-6">
           <img src={logo} alt="logo" className="w-26 self-center" />
