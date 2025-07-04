@@ -80,6 +80,7 @@ export default function Home() {
   }, [masterTodos]);
 
   const postUserTask = async (title, description, dueDate) => {
+    setShowAddTaskModal(false);
     setLoading(true);
     try {
       await BaseApi.post("/todos", {
@@ -90,7 +91,6 @@ export default function Home() {
         dueDate: dueDate,
       });
       getTaskById();
-      setShowAddTaskModal(false);
       toast.success("Task added successfully");
     } catch (error) {
       setLoading(false);
@@ -99,6 +99,7 @@ export default function Home() {
   };
 
   const postEditUserTask = async (title, description, id, dueDate) => {
+    setSelectedDataEdit(null);
     setLoading(true);
     try {
       await BaseApi.put(`/todos/${id}`, {
@@ -109,7 +110,6 @@ export default function Home() {
         dueDate: dueDate,
       });
       getTaskById();
-      setSelectedDataEdit(null);
       toast.success("Task edited successfully");
     } catch (error) {
       setLoading(false);
@@ -118,11 +118,11 @@ export default function Home() {
   };
 
   const deleteUserTask = async () => {
+    setSelectedDataDelete(null);
     setLoading(true);
     try {
       await BaseApi.delete(`/todos/${selectedDataDelete.id}`);
       getTaskById();
-      setSelectedDataDelete(null);
       toast.success("Task deleted successfully");
     } catch (error) {
       setLoading(false);
@@ -146,6 +146,7 @@ export default function Home() {
 
   const handleSaveEditUser = async (name, password, id) => {
     setLoading(true);
+    setShowUserModal(false);
     try {
       const response = await BaseApi.put(`/users/${id}`, {
         id: id,
@@ -153,7 +154,7 @@ export default function Home() {
         password: password,
       });
       setLoading(false);
-      setShowUserModal(false);
+      toast.success("User edited successfully");
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(response.data));
     } catch (error) {
