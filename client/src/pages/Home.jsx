@@ -16,6 +16,7 @@ import LoadingModal from "../components/LoadingModal";
 export default function Home() {
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem("user"));
+  console.log(userData);
 
   const [showUserModal, setShowUserModal] = useState(false);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
@@ -34,7 +35,6 @@ export default function Home() {
     if (!userData) {
       navigate("/login", { replace: true });
     }
-    return;
   }, []);
 
   const handleLogout = () => {

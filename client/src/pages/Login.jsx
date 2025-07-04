@@ -10,7 +10,7 @@ import LoadingModal from "../components/LoadingModal";
 export default function Login() {
   const navigate = useNavigate();
   const [dataUser, setDataUser] = useState([]);
-  // console.log(dataUser);
+  console.log(dataUser);
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
